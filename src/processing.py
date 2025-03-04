@@ -27,3 +27,16 @@ def sort_subfunc(operation: dict[str, Any]) -> datetime:
     moment = datetime.strptime(operation["date"], "%Y-%m-%dT%H:%M:%S.%f")
 
     return moment
+
+
+def sort_by_date(operations: Oper, vector: bool = True) -> Oper:
+    """
+     Функция принимает список банковских операций и возвращает новый список, отсортированный
+     по дате проведения операции.
+    :param operations: (Oper) список операций, представленных в виде словарей
+    :param vector: (bool) порядок сортировки (True - убывание)
+    :return: (Oper) отсортированный список словарей
+    """
+    sorted_list = sorted(operations, key=sort_subfunc, reverse=vector)
+
+    return sorted_list
