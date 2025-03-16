@@ -1,10 +1,14 @@
 from datetime import datetime
-from typing import Any
+from typing import Any, Optional
 
-type Oper = list[dict[str, int | str]]
+from dateutil import parser
+
+from exceptions.my_error import MyError
+
+type Oper = Optional[list[dict[str, int | str]]]
 
 
-def filter_by_state(operations: Oper, state: str = "EXECUTED") -> Oper:
+def filter_by_state(operations: Oper = None, state: str = "EXECUTED") -> Oper:
     """
      Функция принимает список банковских операций, фильтрует их по параметру состояния (выполнен, отменён и пр.)
      и возвращает отфильтрованный список.
@@ -12,9 +16,17 @@ def filter_by_state(operations: Oper, state: str = "EXECUTED") -> Oper:
     :param state: (str) состояние операции, по которому фильтруется передаваемый список
     :return: (Oper) список отфильтрованных операций
     """
-    selected_operations = filter(lambda x: x["state"] == state, operations)
+    if not operations:
+        raise MyError("отсутствует список операций")
 
-    return list(selected_operations)
+    selected_operations = list()
+    for elem in operations:
+        if not elem.get("state", False):
+            raise MyError('в словаре отсутствует ключ "state"')
+        if elem.get("state", False) == state:
+            selected_operations.append(elem)
+
+    return selected_operations
 
 
 def sort_subfunc(operation: dict[str, Any]) -> datetime:
@@ -24,12 +36,19 @@ def sort_subfunc(operation: dict[str, Any]) -> datetime:
     :param operation: (dict[str, int | str]) словарь с данными по банковской операции
     :return: (datetime) объект даты операции
     """
-    moment = datetime.strptime(operation["date"], "%Y-%m-%dT%H:%M:%S.%f")
+    date_string = operation.get("date", "")
+    if not date_string:
+        raise MyError('в словаре отсутствует ключ "date"')
+
+    try:
+        moment = parser.parse(date_string)
+    except ValueError:
+        raise MyError("неизвестный формат даты")
 
     return moment
 
 
-def sort_by_date(operations: Oper, vector: bool = True) -> Oper:
+def sort_by_date(operations: Oper = None, vector: bool = True) -> Oper:
     """
      Функция принимает список банковских операций и возвращает новый список, отсортированный
      по дате проведения операции.
@@ -37,6 +56,9 @@ def sort_by_date(operations: Oper, vector: bool = True) -> Oper:
     :param vector: (bool) порядок сортировки (True - убывание)
     :return: (Oper) отсортированный список словарей
     """
+    if not operations:
+        raise MyError("отсутствует список операций")
+
     sorted_list = sorted(operations, key=sort_subfunc, reverse=vector)
 
     return sorted_list
