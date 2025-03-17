@@ -1,37 +1,43 @@
-def get_mask_card_number(card_number: int) -> str:
+from exceptions.my_error import MyError
+
+
+def get_mask_card_number(card_number: int | str = "") -> str:
     """
     Функция принимает на вход номер карты и возвращает ее маску
-    :param card_number: (int) принимаемый номер карты
+    :param card_number: (int, str) принимаемый номер карты
     :return: (str) строка с замаскированным номером карты
     """
-    str_card_number = str(card_number)
-    # Вариант решения с помощью форматирования строки
+    str_card_number = str(card_number).replace(" ", "")
+    str_length = len(str_card_number)
 
-    mask_card_number = f"{str_card_number[:4]} {str_card_number[4:6]}** **** {str_card_number[-4:]}"
+    if not str_card_number:
+        raise MyError("пустое значение на входе")
+    if not str_card_number.isdigit():
+        raise MyError("на входе могут быть только цифры")
 
-    # Вариант решения с помощью списков
-
-    # list_card_number = list(str_card_number)
-    # list_card_number[6 : 12] = ['*'] * 6
-    # i = len(list_card_number) - 1
-    #
-    # while i > 3:
-    #     if i % 4 == 0:
-    #         list_card_number.insert(i, ' ')
-    #     i -= 1
-    #
-    # mask_card_number = ''.join(list_card_number)
-
-    return mask_card_number
+    match str_length:
+        case 18 | 19:
+            raise MyError("Ваша карта устарела")
+        case 16:
+            return f"{str_card_number[:4]} {str_card_number[4:6]}** **** {str_card_number[-4:]}"
+        case _:
+            raise MyError
 
 
-def get_mask_account(account: int) -> str:
+def get_mask_account(account: int | str = "") -> str:
     """
     Функция принимает на вход номер счета и возвращает его маску
-    :param account:(int) принимаемый номер счёта
+    :param account:(int, str) принимаемый номер счёта
     :return:(str) строка с замаскированным номером счёта
     """
-    str_account = str(account)
-    mask_account = f"**{str_account[-4:]}"
+    str_account = str(account).replace(" ", "")
+    account_length = len(str_account)
 
-    return mask_account
+    if not str_account:
+        raise MyError("пустое значение на входе")
+    if not str_account.isdigit():
+        raise MyError("на входе могут быть только цифры")
+    if account_length != 20:
+        raise MyError
+
+    return f"**{str_account[-4:]}"
