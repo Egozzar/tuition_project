@@ -71,3 +71,34 @@ def list_of_dict_no_date():
         {"id": 455432778, "state": "CANCELED", "datetime": "2024-09-12T21:14:10.778112"},
         {"id": 615064591, "state": "CANCELED", "datetime": "2010-10-14T08:21:33.419441"},
     ]
+
+
+@pytest.fixture
+def list_transactions_shortcut():
+    return [
+        {
+            "id": 939719570,
+            "state": "EXECUTED",
+            "operationAmount": {"amount": "9824.07", "currency": {"name": "USD", "code": "USD"}},
+        },
+        {
+            "id": 142264268,
+            "state": "EXECUTED",
+            "operationAmount": {"amount": "79114.93", "currency": {"name": "USD", "code": "USD"}},
+        },
+        {
+            "id": 873106923,
+            "state": "EXECUTED",
+            "operationAmount": {"amount": "43318.34", "currency": {"name": "руб.", "code": "RUB"}},
+        },
+        {
+            "id": 895315941,
+            "state": "EXECUTED",
+            "operationAmount": {"amount": "56883.54", "currency": {"name": "USD", "code": "USD"}},
+        },
+        {
+            "id": 594226727,
+            "state": "CANCELED",
+            "operationAmount": {"amount": "67314.70", "currency": {"name": "руб.", "code": "RUB"}},
+        },
+    ]
