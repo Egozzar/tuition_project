@@ -1,4 +1,7 @@
-from src.generators import filter_by_currency, transaction_descriptions
+import pytest
+
+from exceptions.my_error import MyError
+from src.generators import card_number_generator, filter_by_currency, transaction_descriptions
 
 
 def test_filter_by_currency_usd(list_transactions_shortcut):
@@ -77,3 +80,29 @@ def test_transaction_descriptions_no_descriptions(list_transactions_no_descripti
     gen = transaction_descriptions(list_transactions_no_descriptions)
     assert next(gen) == "Описание транзакции отсутствует"
     assert next(gen) == "Описание транзакции отсутствует"
+
+
+def test_card_number_generator():
+    gen_1 = card_number_generator(12, 14)
+    assert next(gen_1) == "0000 0000 0000 0012"
+    assert next(gen_1) == "0000 0000 0000 0013"
+    assert next(gen_1) == "0000 0000 0000 0014"
+
+    gen_2 = card_number_generator(9999999999999997, 9999999999999999)
+    assert next(gen_2) == "9999 9999 9999 9997"
+    assert next(gen_2) == "9999 9999 9999 9998"
+    assert next(gen_2) == "9999 9999 9999 9999"
+
+
+def test_card_number_generator_empty():
+    with pytest.raises(MyError) as err:
+        gen = card_number_generator()
+        next(gen)
+        assert str(err.value) == "Ошибка ввода."
+
+
+def test_card_number_generator_over():
+    with pytest.raises(MyError) as err:
+        gen = card_number_generator(1, 99999999999999999)
+        next(gen)
+        assert str(err.value) == "Ошибка: задан чрезмерный диапазон."

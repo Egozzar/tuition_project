@@ -30,3 +30,22 @@ def transaction_descriptions(operations: Optional[list[dict]] = None) -> Iterato
 
     for operation in operations:
         yield operation.get("description", "Описание транзакции отсутствует")
+
+
+def card_number_generator(start: int = 1, stop: int = 0) -> Iterator[str]:
+    """
+    Функция принимает начальное и конечное число диапазона и формирует генератор,
+    который выдает номера банковских карт в заданном диапазоне в необходимом формате.
+    :param start:(int) начальное число диапазона.
+    :param stop:(int) конечное число диапазона.
+    """
+    if stop > 9999999999999999:
+        raise MyError("задан чрезмерный диапазон")
+
+    if start >= stop:
+        raise MyError
+
+    for num in range(start, stop + 1):
+        str_card = str(num).rjust(16, "0")
+
+        yield f"{str_card[:4]} {str_card[4:8]} {str_card[8:12]} {str_card[-4:]}"
