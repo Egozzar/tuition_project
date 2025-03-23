@@ -1,4 +1,4 @@
-from src.generators import filter_by_currency
+from src.generators import filter_by_currency, transaction_descriptions
 
 
 def test_filter_by_currency_usd(list_transactions_shortcut):
@@ -48,3 +48,32 @@ def test_filter_by_currency_no_code(list_transactions_shortcut):
 
 def test_filter_by_currency_empty():
     assert filter_by_currency([], "RUB")
+
+
+def test_transaction_descriptions_empty():
+    gen = transaction_descriptions()
+    result = next(gen)
+    res_for_comparison = "Список транзакций пуст или отсутствует"
+    assert res_for_comparison == result
+
+
+def test_transaction_descriptions_empty_list():
+    gen = transaction_descriptions([])
+    result = next(gen)
+    res_for_comparison = "Список транзакций пуст или отсутствует"
+    assert res_for_comparison == result
+
+
+def test_transaction_descriptions(list_transactions):
+    gen = transaction_descriptions(list_transactions)
+    assert next(gen) == "Перевод организации"
+    assert next(gen) == "Перевод со счета на счет"
+    assert next(gen) == "Перевод со счета на счет"
+    assert next(gen) == "Перевод с карты на карту"
+    assert next(gen) == "Перевод организации"
+
+
+def test_transaction_descriptions_no_descriptions(list_transactions_no_descriptions):
+    gen = transaction_descriptions(list_transactions_no_descriptions)
+    assert next(gen) == "Описание транзакции отсутствует"
+    assert next(gen) == "Описание транзакции отсутствует"

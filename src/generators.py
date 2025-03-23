@@ -1,4 +1,6 @@
-from typing import Iterator, Union
+from typing import Iterator, Optional, Union
+
+from exceptions.my_error import MyError
 
 
 def filter_by_currency(operations: list[dict], curr_code: str) -> Iterator[dict[str, Union[int, str, dict]]]:
@@ -12,3 +14,19 @@ def filter_by_currency(operations: list[dict], curr_code: str) -> Iterator[dict[
     return (
         elem for elem in operations if elem.get("operationAmount", {}).get("currency", {}).get("code", "") == curr_code
     )
+
+
+def transaction_descriptions(operations: Optional[list[dict]] = None) -> Iterator[str]:
+    """
+    Функция принимает список транзакций и формирует итератор, перебирающий описание входных транзакций.
+    :param operations: (list[dict]) список транзакций в виде словарей.
+    :return: (None)
+    """
+    try:
+        if not operations:
+            raise MyError
+    except MyError:
+        operations = [{"description": "Список транзакций пуст или отсутствует"}]
+
+    for operation in operations:
+        yield operation.get("description", "Описание транзакции отсутствует")
