@@ -42,7 +42,7 @@ def card_number_generator(start: int = 1, stop: int = 0) -> Iterator[str]:
     if stop > 9999999999999999:
         raise MyError("задан чрезмерный диапазон")
 
-    if start >= stop:
+    if start > stop:
         raise MyError
 
     for num in range(start, stop + 1):
