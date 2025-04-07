@@ -175,3 +175,47 @@ def list_transactions_no_descriptions():
             "to": "Счет 75651667383060284188",
         },
     ]
+
+
+@pytest.fixture
+def list_transaction_codes():
+    return [
+        {
+            "id": 142264268,
+            "state": "EXECUTED",
+            "date": "2019-04-04T23:20:05.206878",
+            "operationAmount": {"amount": "79114.93", "currency": {"name": "USD", "code": "USD"}},
+            "description": "Перевод со счета на счет",
+            "from": "Счет 19708645243227258542",
+            "to": "Счет 75651667383060284188",
+        },
+        {
+            "id": 441945886,
+            "state": "EXECUTED",
+            "date": "2019-08-26T10:50:58.294041",
+            "operationAmount": {"amount": "31957.58", "currency": {"name": "руб.", "code": "RUB"}},
+            "description": "Перевод организации",
+            "from": "Maestro 1596837868705199",
+            "to": "Счет 64686473678894779589",
+        },
+        {
+            "id": 522357576,
+            "state": "EXECUTED",
+            "date": "2019-07-12T20:41:47.882230",
+            "operationAmount": {"amount": "51463.70", "currency": {"name": "gbr", "code": "GBR"}},
+            "description": "Перевод организации",
+            "from": "Счет 48894435694657014368",
+            "to": "Счет 38976430693692818358",
+        },
+    ]
+
+
+@pytest.fixture
+def result_for_transaction_usd():
+    return {
+        "success": True,
+        "query": {"from": "USD", "to": "RUB", "amount": 79114.93},
+        "info": {"timestamp": 1743979383, "rate": 84.674391},
+        "date": "2025-04-06",
+        "result": 6699008.516758,
+    }
