@@ -11,14 +11,18 @@
 Пример работы генератора по [созданию номеров банковских карт](pictures/card_number_generator_job.png)
   + decorators.py - модуль с функциями-декораторами для декорирования "рабочих" функций<br/>
 с целью добавления им нового функционала
+  + external_api.py - модуль с функцией конвертации суммы транзакций на удалённом ресурсе
   + masks.py - модуль с функциями маскировки реквизитов 
   + processing.py - модуль с функциями сортировки и фильтрации банковских операций
+  + utils.py - модуль с функцией преобразования json-файлов
   + widget.py - модуль с функцией форматирования даты
 * tests
   + test_generators.py - модуль с тестами для модуля generators.py
   + test_decorators.py - модуль с тестами для модуля decorators.py
+  + test_external_api.py - модуль с тестами для модуля external_api.py
   + test_masks.py - модуль с тестами для модуля masks.py
   + test_processing.py - модуль с тестами для модуля processing.py
+  + test_utils.py - модуль с тестами для модуля utils.py
   + test_widget.py - модуль с тестами для модуля widget.py
 ## Установка
 ```commandline
