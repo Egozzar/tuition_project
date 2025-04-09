@@ -1,8 +1,9 @@
 import os
-import sys
 from datetime import datetime
 from functools import wraps
-from typing import Any, Callable, Final
+from typing import Any, Callable
+
+from constants import ROOT_PATH
 
 
 def log(filename: str = "") -> Callable[[Callable], Callable]:
@@ -30,7 +31,6 @@ def log(filename: str = "") -> Callable[[Callable], Callable]:
             :param kwargs:(dict) возможные именованные аргументы
             :return: результат работы целевой функции
             """
-            ROOT_PATH: Final[str] = sys.path[1]
             start_text = f"Function {func.__name__} started ({datetime.now().strftime('%d.%m.%y %H:%M:%S.%f')})\n"
             good_text = f"Function {func.__name__} ok\n"
             finish_text = f"Function {func.__name__} finished ({datetime.now().strftime('%d.%m.%y %H:%M:%S.%f')})\n"
