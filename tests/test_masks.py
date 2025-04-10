@@ -32,7 +32,7 @@ def test_get_mask_card_number_alpha():
 def test_get_mask_card_number_outdated():
     with pytest.raises(MyError) as err:
         get_mask_card_number("123456789012345678")
-    assert str(err.value) == "Ошибка: Ваша карта устарела."
+    assert str(err.value) == "Ошибка: ваша карта устарела."
 
 
 def test_get_mask_card_number_wrong_len():

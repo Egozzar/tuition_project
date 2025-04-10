@@ -24,6 +24,8 @@
   + test_processing.py - модуль с тестами для модуля processing.py
   + test_utils.py - модуль с тестами для модуля utils.py
   + test_widget.py - модуль с тестами для модуля widget.py
+
+В проект добавлена директория [logs](logs) для ведения отчётов по работе функционала проекта.
 ## Установка
 ```commandline
 poetry install

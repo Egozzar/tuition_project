@@ -232,3 +232,16 @@ def str_transaction_codes():
            "Счет 64686473678894779589"}, {"id": 522357576, "state": "EXECUTED", "date": "2019-07-12T20:41:47.882230", \
            "operationAmount": {"amount": "51463.70", "currency": {"name": "gbr", "code": "GBR"}}, "description": \
            "Перевод организации", "from": "Счет 48894435694657014368", "to": "Счет 38976430693692818358"}]'
+
+
+@pytest.fixture
+def result_for_transaction_first():
+    return {
+        "id": 441945886,
+        "state": "EXECUTED",
+        "date": "2019-08-26T10:50:58.294041",
+        "operationAmount": {"amount": "31957.58", "currency": {"name": "руб.", "code": "RUB"}},
+        "description": "Перевод организации",
+        "from": "Maestro 1596837868705199",
+        "to": "Счет 64686473678894779589",
+    }
