@@ -40,6 +40,7 @@ def get_mask_card_number(card_number: int | str = "") -> Any:
                 raise MyError
     except MyError as err:
         logger.error(f"{err}")
+        raise err
 
 
 def get_mask_account(account: int | str = "") -> Any:
@@ -63,3 +64,4 @@ def get_mask_account(account: int | str = "") -> Any:
         return f"**{str_account[-4:]}"
     except MyError as err:
         logger.error(f"{err}")
+        raise err
