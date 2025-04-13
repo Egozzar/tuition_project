@@ -1,31 +1,26 @@
-import os
+from unittest.mock import patch
 
-from constants import ROOT_PATH
 from src.utils import loader_json
-
-way = os.path.join(ROOT_PATH, "data", "operations.json")
-way2 = os.path.join(ROOT_PATH, "tests", "ex2.json")
-way3 = os.path.join(ROOT_PATH, "tests", "ex3.json")
-way4 = os.path.join(ROOT_PATH, "tests", "ex.json")
-
-
-def test_loader_json(result_for_transaction_first):
-    assert loader_json()[0] == result_for_transaction_first
-
-
-def test_loader_json_no_content():
-    assert loader_json(way2) == []
-
-
-def test_loader_json_no_list():
-    assert loader_json(way3) == []
 
 
 def test_loader_json_wrong_address():
-    assert loader_json(way4) == []
+    wrong_way = "ex.json"
+    assert loader_json(wrong_way) == []
 
 
-# @patch("open")
-# def test_loader_json(mock_open, str_transaction_codes, list_transaction_codes):
-#     mock_open.return_value = str_transaction_codes
-#     assert loader_json("../data/operations") == list_transaction_codes
+@patch("builtins.open")
+@patch("json.load")
+def test_loader_json_no_list(mock_json, mock_open):
+    mock_json.return_value = "qwert"
+
+    assert loader_json("test.json") == []
+    mock_open.assert_called_once_with("test.json", encoding="UTF=8")
+
+
+@patch("builtins.open")
+@patch("json.load")
+def test_loader_json(mock_json, mock_open, str_transaction_codes, list_transaction_codes):
+    mock_json.return_value = list_transaction_codes
+
+    assert loader_json(str_transaction_codes) == list_transaction_codes
+    mock_open.assert_called_once_with(str_transaction_codes, encoding="UTF=8")
