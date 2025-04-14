@@ -14,4 +14,4 @@ def test_selection_by_exp_no_expression(list_transactions):
 
 
 def test_selection_by_exp_empty():
-    assert selection_by_exp([]) == []
+    assert selection_by_exp([], None) == []
