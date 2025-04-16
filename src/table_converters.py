@@ -35,6 +35,8 @@ def reader_excel(address: str = path_xlsx) -> list[dict[Hashable, Any] | None]:
     """
     try:
         df = pd.read_excel(address)
+        df.fillna(0, inplace=True)
+
         result = df.to_dict(orient="records")
 
         return list(result)

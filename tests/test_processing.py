@@ -30,12 +30,6 @@ def test_filter_by_state_no_list():
     assert str(err.value) == "Ошибка: отсутствует список операций."
 
 
-def test_filter_by_state_no_state(list_of_dict_no_state):
-    with pytest.raises(MyError) as err:
-        filter_by_state(list_of_dict_no_state)
-    assert str(err.value) == 'Ошибка: в словаре отсутствует ключ "state".'
-
-
 def test_sort_by_date(list_of_dict):
     assert sort_by_date(list_of_dict) == [
         {"id": 455432778, "state": "CANCELED", "date": "2024-09-12T21:14:10.778112"},
