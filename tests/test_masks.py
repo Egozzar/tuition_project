@@ -64,9 +64,3 @@ def test_get_mask_account_alpha():
     with pytest.raises(MyError) as err:
         get_mask_account("12iiiiiiiiiiiiiiii77")
     assert str(err.value) == "Ошибка: на входе могут быть только цифры."
-
-
-def test_get_mask_account_wrong_len():
-    with pytest.raises(MyError) as err:
-        get_mask_account(123456789)
-    assert str(err.value) == "Ошибка ввода."

@@ -22,7 +22,7 @@ def filter_by_state(operations: Oper = None, state: str = "EXECUTED") -> Oper:
     selected_operations = list()
     for elem in operations:
         if not elem.get("state", False):
-            raise MyError('в словаре отсутствует ключ "state"')
+            continue
         if elem.get("state", False) == state:
             selected_operations.append(elem)
 

@@ -12,7 +12,6 @@ def mask_account_card(bank_details: str = "") -> str:
     :param bank_details: (str) принимаемая строка с реквизитами
     :return: (str) строка с замаскированными номером счёта или номером карты
     """
-    bank_details = bank_details.strip()
     if not bank_details:
         raise MyError("пустое значение на входе")
 
@@ -23,12 +22,12 @@ def mask_account_card(bank_details: str = "") -> str:
     if number_of_digits == len(bank_details):
         raise MyError("нет названия реквизита на входе")
 
-    number_for_transformations = int(bank_details[-number_of_digits:])
+    string_for_transformations = bank_details[-number_of_digits:]
 
-    if number_of_digits == 20:
-        res_substring = get_mask_account(number_for_transformations)
+    if 18 < number_of_digits < 21:
+        res_substring = get_mask_account(string_for_transformations)
     else:
-        res_substring = get_mask_card_number(number_for_transformations)
+        res_substring = get_mask_card_number(string_for_transformations)
 
     return f"{bank_details[: -number_of_digits]}{res_substring}"
 

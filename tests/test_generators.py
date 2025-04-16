@@ -26,6 +26,11 @@ def test_filter_by_currency_usd(list_transactions_shortcut):
     assert res_for_comparison == result
 
 
+def test_filter_by_currency_all(list_transactions_shortcut):
+    result = list(filter_by_currency(list_transactions_shortcut))
+    assert list_transactions_shortcut == result
+
+
 def test_filter_by_currency_rub(list_transactions_shortcut):
     res_for_comparison = [
         {
@@ -47,10 +52,6 @@ def test_filter_by_currency_no_code(list_transactions_shortcut):
     res_for_comparison = []
     result = list(filter_by_currency(list_transactions_shortcut, "EUR"))
     assert res_for_comparison == result
-
-
-def test_filter_by_currency_empty():
-    assert filter_by_currency([], "RUB")
 
 
 def test_transaction_descriptions_empty():

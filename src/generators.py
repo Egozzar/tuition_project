@@ -3,7 +3,7 @@ from typing import Iterator, Optional, Union
 from exceptions.my_error import MyError
 
 
-def filter_by_currency(operations: list[dict], curr_code: str) -> Iterator[dict[str, Union[int, str, dict]]]:
+def filter_by_currency(operations: list[dict], curr_code: str = "") -> Iterator[dict[str, Union[int, str, dict]]]:
     """
     Функция принимает список транзакций и название валюты,
     по которому транзакции отбираются в возвращаемый генератор.
@@ -11,6 +11,12 @@ def filter_by_currency(operations: list[dict], curr_code: str) -> Iterator[dict[
     :param curr_code: (str) название валюты, по которому транзакции будут помещены в возвращаемый генератор
     :return: генератор отобранных транзакций
     """
+    if curr_code == "":
+        return (elem for elem in operations)
+
+    if "currency_code" in operations[0]:
+        return (elem for elem in operations if elem.get("currency_code", "") == curr_code)
+
     return (
         elem for elem in operations if elem.get("operationAmount", {}).get("currency", {}).get("code", "") == curr_code
     )
