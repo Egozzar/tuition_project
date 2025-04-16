@@ -31,13 +31,13 @@ def get_mask_card_number(card_number: int | str = "") -> Any:
             raise MyError("на входе могут быть только цифры")
 
         match str_length:
-            case 18 | 19:
+            case 18:
                 raise MyError("ваша карта устарела")
-            case 16:
+            case 16 | 15 | 14:
                 logger.info(f"Успешное создание маски для карты {card_number}")
                 return f"{str_card_number[:4]} {str_card_number[4:6]}** **** {str_card_number[-4:]}"
             case _:
-                raise MyError
+                raise MyError()
     except MyError as err:
         logger.error(f"{err}")
         raise err
@@ -57,7 +57,7 @@ def get_mask_account(account: int | str = "") -> Any:
             raise MyError("пустое значение на входе")
         if not str_account.isdigit():
             raise MyError("на входе могут быть только цифры")
-        if account_length != 20:
+        if 20 < account_length < 19:
             raise MyError
 
         logger.info(f"Успешное создание маски для номера счёта {account}")
